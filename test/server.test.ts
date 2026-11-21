@@ -99,3 +99,8 @@ test("lists files for the bearer token only", async () => {
 	const files = (await res.json()) as { key: string; size: number }[];
 	assert.deepEqual(files.map((f) => `${f.key}:${f.size}`).sort(), ["list/a/one.txt:1", "list/b/two.txt:2"]);
 });
+
+// The plugin (dbraendle/obsidian-keyhole, src/storage/keyhole-sign.ts) checks the same vector.
+test("signature matches the fixed vector shared with the plugin", () => {
+	assert.equal(signKey("t".repeat(64), "GET", "2026/11/a-b.mp4", 1_800_000_000), "ee4eae0625e36cfcb6c0ccb6b4440aa4cd0291a0add370a35217717eaf02d0d9");
+});
