@@ -11,6 +11,13 @@ updates:
     groups:
       dev-dependencies:
         dependency-type: development
+    ignore:
+      # typescript-eslint does not support TypeScript 7 yet.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      # The Node types follow the Node version CI and the image run on.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -23,3 +30,7 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+    ignore:
+      # A new Node major is a deliberate step: the image, CI and the Node types move together.
+      - dependency-name: node
+        update-types: ["version-update:semver-major"]
